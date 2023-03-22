@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AddList from "../Components/AddList";
 import ListShow from "../Components/ListShow";
 import TabsScrollBar from "../Components/TabsScrollBar";
 
 export default function Home() {
+  const navigate = useNavigate();
+
   const [lists, setLists] = useState([
     {
       name: "one list",
@@ -53,9 +56,31 @@ export default function Home() {
 
   const getLists = () => {};
 
+  const logout = () => {
+    navigate("/");
+  };
+
   console.log(firstTabIndex, lastTabIndex, tabsIndex);
   return (
     <div className="w-[100%] h-[100%] bg-[#2C3333] flex justify-around items-center flex-col">
+      <button
+        onClick={logout}
+        className="w-[5%] h-[5%] self-start mx-5 text-white"
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            clipRule="evenodd"
+            fillRule="evenodd"
+            d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z"
+          ></path>
+        </svg>
+      </button>
+
       <div className="w-[50%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center overflow-hidden">
         <section className="w-[100%] h-[10%] flex border-b border-b-[#2C3333]">
           <TabsScrollBar
