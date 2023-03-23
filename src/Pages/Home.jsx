@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddList from "../Components/AddList";
 import ListShow from "../Components/ListShow";
@@ -7,48 +7,14 @@ import TabsScrollBar from "../Components/TabsScrollBar";
 export default function Home() {
   const navigate = useNavigate();
 
-  const [lists, setLists] = useState([
-    {
-      name: "one list",
-      list: [
-        { content: "1", checked: false },
-        { content: "1", checked: false },
-        { content: "1", checked: false },
-        { content: "1", checked: false },
-        { content: "1", checked: false },
-      ],
-    },
-    {
-      name: "two list",
-      list: [
-        { content: "2", checked: true },
-        { content: "2", checked: true },
-        { content: "2", checked: false },
-        { content: "2", checked: false },
-        { content: "2", checked: false },
-      ],
-    },
-    {
-      name: "three list",
-      list: [
-        { content: "3", checked: false },
-        { content: "3", checked: false },
-        { content: "3", checked: false },
-        { content: "3", checked: true },
-        { content: "3", checked: false },
-      ],
-    },
-    { name: "four list", list: [1, 2, 3, 4, 5] },
-    { name: "five list", list: [] },
-    { name: "six list", list: [] },
-    { name: "seven list", list: [] },
-  ]);
+  const [lists, setLists] = useState([]);
 
   const [currentListIndex, setCurrentListIndex] = useState();
 
   const [tabsIndex, setTabsIndex] = useState();
   const [firstTabIndex, setFirstTabIndex] = useState(null);
   const [lastTabIndex, setLastTabIndex] = useState(null);
+  const [showAddTask, setShowAddTask] = useState(null);
 
   useEffect(() => {
     // getLists()
@@ -60,9 +26,33 @@ export default function Home() {
     navigate("/");
   };
 
-  console.log(firstTabIndex, lastTabIndex, tabsIndex);
+  const addTaskWindowRef = useRef();
+
+  const closeAddTask = (event) => {
+    if (
+      addTaskWindowRef.current &&
+      !addTaskWindowRef.current.contains(event.target)
+    ) {
+      setShowAddTask(false);
+    }
+  };
+
   return (
-    <div className="w-[100%] h-[100%] bg-[#2C3333] flex justify-around items-center flex-col">
+    <div
+      onClick={(e) => closeAddTask(e)}
+      className="w-[100%] h-[100%] bg-[#2C3333] flex justify-around items-center flex-col"
+    >
+      <div
+        style={{ zIndex: -1 }}
+        className={`w-[100%] h-[100%] absolute ${
+          showAddTask
+            ? "animate-toDarkScreen"
+            : showAddTask != null
+            ? "animate-toTransparentScreen"
+            : ""
+        }`}
+      ></div>
+
       <button
         onClick={logout}
         className="w-[5%] h-[5%] self-start mx-5 text-white"
@@ -105,9 +95,12 @@ export default function Home() {
               setFirstTabIndex={setFirstTabIndex}
               setLastTabIndex={setLastTabIndex}
               lists={lists}
+              showAddTask={showAddTask}
+              setShowAddTask={setShowAddTask}
+              addTaskWindowRef={addTaskWindowRef}
             />
           ) : (
-            <div className="text-white text-2xl w-[100%] h-[100%]">
+            <div className="text-white text-2xl w-[100%] h-[100%] ">
               <AddList
                 setCurrentListIndex={setCurrentListIndex}
                 setFirstTabIndex={setFirstTabIndex}
@@ -123,3 +116,40 @@ export default function Home() {
     </div>
   );
 }
+
+// [
+//   {
+//     name: "one list",
+//     list: [
+//       { content: "1", checked: false },
+//       { content: "1", checked: false },
+//       { content: "1", checked: false },
+//       { content: "1", checked: false },
+//       { content: "1", checked: false },
+//     ],
+//   },
+//   {
+//     name: "two list",
+//     list: [
+//       { content: "2", checked: true },
+//       { content: "2", checked: true },
+//       { content: "2", checked: false },
+//       { content: "2", checked: false },
+//       { content: "2", checked: false },
+//     ],
+//   },
+//   {
+//     name: "three list",
+//     list: [
+//       { content: "3", checked: false },
+//       { content: "3", checked: false },
+//       { content: "3", checked: false },
+//       { content: "3", checked: true },
+//       { content: "3", checked: false },
+//     ],
+//   },
+//   { name: "four list", list: [1, 2, 3, 4, 5] },
+//   { name: "five list", list: [] },
+//   { name: "six list", list: [] },
+//   { name: "seven list", list: [] },
+// ]
