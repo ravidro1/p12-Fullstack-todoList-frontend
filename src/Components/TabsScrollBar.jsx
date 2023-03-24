@@ -48,7 +48,7 @@ export default function TabsScrollBar({
     <section className="w-[100%] h-[100%] flex  bg-[#a1bdb6]">
       <button
         onClick={() => scrollTabs("left")}
-        className="w-[5%] h-[100%] font-bold text-xl text-white"
+        className="w-[5%] h-[100%] font-bold text-xl text-white  outline-none"
       >
         <svg
           fill="none"
@@ -78,7 +78,7 @@ export default function TabsScrollBar({
         <button
           onClick={() => setCurrentListIndex(null)}
           className={
-            "h-[100%] min-w-[90%] max-w-[100%] flex justify-center items-center  p-0 rounded-xl relative text-[#0E8388] capitalize  mx-[5%]"
+            "h-[100%] min-w-[90%] max-w-[100%] flex justify-center items-center  p-0 rounded-xl relative text-[#0E8388] capitalize  mx-[5%]  outline-none"
           }
         >
           <svg
@@ -99,7 +99,7 @@ export default function TabsScrollBar({
 
       <button
         onClick={() => scrollTabs("right")}
-        className="w-[5%] h-[100%] font-bold text-xl text-white"
+        className="w-[5%] h-[100%] font-bold text-xl text-white  outline-none"
       >
         <svg
           fill="none"
