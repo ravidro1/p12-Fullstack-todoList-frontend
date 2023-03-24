@@ -67,6 +67,20 @@ export default function ListShow({
         </div>
 
         <div className="w-[75%] h-[72%] flex items-center flex-col overflow-y-scroll border border-[#000] bg-[#CBE4DE]">
+          <button
+            onClick={() => setShowAddTask(true)}
+            style={{
+              backgroundColor:
+                lists.find((element, index) => index == currentListIndex).list
+                  .length % 2
+                  ? "#1fa3a7"
+                  : "#0e848873",
+            }}
+            className={"w-[100%] h-[15%] text-5xl"}
+          >
+            {" "}
+            +{" "}
+          </button>
           {lists
             .find((element, index) => index == currentListIndex)
             .list.map((item, index) => {
@@ -83,20 +97,6 @@ export default function ListShow({
                 );
               }
             })}
-          <button
-            onClick={() => setShowAddTask(true)}
-            style={{
-              backgroundColor:
-                lists.find((element, index) => index == currentListIndex).list
-                  .length % 2
-                  ? "#2E4F4F"
-                  : "#2C3333",
-            }}
-            className={"w-[100%] h-[15%] text-5xl"}
-          >
-            {" "}
-            +{" "}
-          </button>
         </div>
       </section>
 

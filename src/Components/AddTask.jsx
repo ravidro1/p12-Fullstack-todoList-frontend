@@ -32,6 +32,7 @@ export default function AddTask({
                     startDate: tempStartDate,
                     endDate: tempEndDate,
                     checked: false,
+                    isOpen: false,
                   },
                   ...lists.find((element, index) => index == currentListIndex)
                     .list,

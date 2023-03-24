@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <div
       onClick={(e) => closeAddTask(e)}
-      className="w-[100%] h-[100%] bg-[#2C3333] flex justify-around items-center flex-col"
+      className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
     >
       <div
         style={{ zIndex: -1 }}

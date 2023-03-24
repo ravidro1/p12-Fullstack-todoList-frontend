@@ -78,10 +78,11 @@ export default function TabsScrollBar({
         <button
           onClick={() => setCurrentListIndex(null)}
           className={
-            "h-[95%] flex justify-center items-center  p-0 rounded-xl relative text-[#0E8388] capitalize min-w-[90%] max-w-[100%] mx-[5%]"
+            "h-[100%] min-w-[90%] max-w-[100%] flex justify-center items-center  p-0 rounded-xl relative text-[#0E8388] capitalize  mx-[5%]"
           }
         >
           <svg
+            className="h-[85%]"
             fill="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"

@@ -28,7 +28,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-[100%] h-[100%] bg-[#2C3333] flex justify-around items-center flex-col">
+    <div className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight">
       <div className="text-[7vw] text-white"> Login </div>
       <div className="w-[40%] h-[65%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center">
         <section className="w-[100%] h-[35%] flex flex-col justify-around items-center">
@@ -62,7 +62,7 @@ export default function Login() {
             onClick={() => navigate("/SignUp")}
             className="w-[35%] h-[10%] text-white font-semibold text-[1.75vw] outline-none hover:text-red-900"
           >
-            SignUp{" "}
+            To Register{" "}
           </button>
         </section>
       </div>

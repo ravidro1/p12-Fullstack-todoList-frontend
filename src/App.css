@@ -6,7 +6,8 @@
 ::-webkit-scrollbar {
   width: 5px;
   height: 0px;
-  border-left: 1px solid #2c3333;
+  /* border-left: 1px solid #2c3333; */
+  /* background-color: #1fa3a7; */
 }
 
 /* Track */
@@ -27,5 +28,4 @@
 
 * {
   box-sizing: border-box;
-
 }

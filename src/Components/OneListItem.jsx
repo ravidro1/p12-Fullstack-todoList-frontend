@@ -7,8 +7,6 @@ export default function OneListItem({
   lists,
   setLists,
 }) {
-  const [isFullOpen, setIsFullOpen] = useState(false);
-
   const deleteItem = () => {
     setLists((prev) => {
       return [
@@ -54,10 +52,32 @@ export default function OneListItem({
     });
   };
 
+  const changeIsOpen = () => {
+    setLists((prev) => {
+      return [
+        ...prev.map((element, index) => {
+          if (index == currentListIndex) {
+            return {
+              ...element,
+              list: element.list.map((inElement, i) => {
+                if (i == itemIndex)
+                  return { ...inElement, isOpen: !inElement.isOpen };
+                return inElement;
+              }),
+            };
+          }
+          return element;
+        }),
+      ];
+    });
+  };
+
+  console.log(lists);
+
   return (
     <div
-      onDoubleClick={() => setIsFullOpen(!isFullOpen)}
-      style={{ backgroundColor: itemIndex % 2 ? "#2E4F4F" : "#2C3333" }}
+      onDoubleClick={() => changeIsOpen()}
+      style={{ backgroundColor: itemIndex % 2 ? "#1fa3a7" : "#0e848873" }}
       className={"w-[100%] px-4 text-1xl text-white"}
     >
       <section className={"w-[100%] flex justify-between px-4 text-1xl"}>
@@ -96,7 +116,7 @@ export default function OneListItem({
         </button>
       </section>
 
-      {isFullOpen && (
+      {item.isOpen && (
         <section className="w-[100%] ">
           <section className="w-[100%] border-t border-white py-1">
             <div className="flex justify-center"> Content: </div>
