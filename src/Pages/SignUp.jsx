@@ -17,7 +17,7 @@ export default function SignUp() {
     )
       setFieldsFull(true);
     else setFieldsFull(false);
-  }, [tempUsername, tempPassword]);
+  }, [tempUsername, tempPassword, tempVerifyPassword]);
 
   const submitSignUp = () => {
     if (fieldsFull) {
@@ -62,6 +62,7 @@ export default function SignUp() {
 
         <section className="w-[100%] h-[20%] flex flex-col justify-around items-center">
           <button
+            disabled={!fieldsFull}
             onClick={submitSignUp}
             className={
               "w-[35%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold text-[1.5vw] outline-none " +

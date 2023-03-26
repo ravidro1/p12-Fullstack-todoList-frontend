@@ -53,20 +53,14 @@ export default function ListShow({
 
   return (
     <div className="w-[100%] h-[100%] flex justify-center items-center flex-col text-white relative">
-      <section className="w-[100%] h-[90%] flex justify-around items-center flex-col ">
-        <div className="w-[100%] h-[20%] flex flex-col justify-center items-center text-3xl  capitalize px-3 ">
-          <button
-            onClick={deleteList}
-            className="px-2 py-2 h-[45%] flex items-center self-start bg-red-600 rounded-lg border text-[#fff]"
-          >
-            Delete
-          </button>
-          <h1 className="text-7xl h-[55%]">
-            {lists.find((element, index) => index == currentListIndex).name}
-          </h1>
-        </div>
+      <section className="w-[100%] h-[100%] flex justify-around items-center flex-col ">
+        {/* <div className="w-[100%] h-[20%] flex flex-col justify-center items-center text-3xl  capitalize px-3 "> */}
+        <h1 className="text-7xl h-[10%]">
+          {lists.find((element, index) => index == currentListIndex).name}
+        </h1>
+        {/* </div> */}
 
-        <div className="w-[75%] h-[72%] flex items-center flex-col overflow-y-scroll border border-[#000] bg-[#CBE4DE]">
+        <div className="w-[75%] h-[70%] flex items-center flex-col overflow-y-scroll border border-[#000] bg-[#a1bdb6]">
           <button
             onClick={() => setShowAddTask(true)}
             style={{
@@ -98,6 +92,13 @@ export default function ListShow({
               }
             })}
         </div>
+
+        <button
+          onClick={deleteList}
+          className="self-center w-[20%] h-[10%] flex items-center justify-center bg-red-600 rounded-lg border text-[#fff]"
+        >
+          Delete
+        </button>
       </section>
 
       {showAddTask && (

@@ -43,9 +43,10 @@ export default function AddList({
         type="text"
       />
       <button
+        disabled={!fieldsFull}
         className={
           "w-[25%] h-[9%] text-3xl bg-[#2E4F4F] border border-white rounded-lg " +
-          `${!fieldsFull && "opacity-60 cursor-default"}`
+          `${!fieldsFull && "opacity-60"}`
         }
         onClick={addList}
       >

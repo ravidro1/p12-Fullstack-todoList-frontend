@@ -50,14 +50,16 @@ export default function Login() {
 
         <section className="w-[100%] h-[20%] flex flex-col justify-around items-center">
           <button
+            disabled={!fieldsFull}
             onClick={submitLogin}
             className={
               "w-[35%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold text-[1.5vw] outline-none " +
-              `${!fieldsFull && "opacity-60  cursor-default"}`
+              `${!fieldsFull && "opacity-60"}`
             }
           >
             Login{" "}
           </button>
+
           <button
             onClick={() => navigate("/SignUp")}
             className="w-[35%] h-[10%] text-white font-semibold text-[1.75vw] outline-none hover:text-red-900"

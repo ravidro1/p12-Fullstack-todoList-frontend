@@ -47,6 +47,7 @@ export default function TabsScrollBar({
   return (
     <section className="w-[100%] h-[100%] flex  bg-[#a1bdb6]">
       <button
+        disabled={!firstTabIndex}
         onClick={() => scrollTabs("left")}
         className="w-[5%] h-[100%] font-bold text-xl text-white  outline-none"
       >
@@ -98,6 +99,7 @@ export default function TabsScrollBar({
       </div>
 
       <button
+        disabled={lastTabIndex >= lists.length - 1}
         onClick={() => scrollTabs("right")}
         className="w-[5%] h-[100%] font-bold text-xl text-white  outline-none"
       >
