@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { motion } from "framer-motion";
+
 export default function SignUp() {
   const navigate = useNavigate();
 
@@ -33,7 +35,12 @@ export default function SignUp() {
   };
 
   return (
-    <div className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight">
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: "-100%", transition: { duration: 0.3 } }}
+      className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
+    >
       <div className="text-[7vw] text-white"> Register </div>
       <div className="w-[40%] h-[65%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center">
         <section className="w-[100%] h-[35%] flex flex-col justify-around items-center">
@@ -79,6 +86,6 @@ export default function SignUp() {
           </button>
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 }

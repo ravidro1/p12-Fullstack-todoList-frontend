@@ -5,6 +5,7 @@ import Tab from "./Tab";
 export default function TabsScrollBar({
   lists,
   setLists,
+  currentListIndex,
   setCurrentListIndex,
   firstTabIndex,
   lastTabIndex,
@@ -14,6 +15,7 @@ export default function TabsScrollBar({
   setTabsIndex,
 }) {
   const lastTabRef = useRef();
+  const tabContinerRef = useRef();
 
   useEffect(() => {
     if (lists.length > 0 && firstTabIndex == null && lastTabIndex == null) {
@@ -49,7 +51,7 @@ export default function TabsScrollBar({
       <button
         disabled={!firstTabIndex}
         onClick={() => scrollTabs("left")}
-        className="w-[5%] h-[100%] font-bold text-xl text-white  outline-none"
+        className="w-[5%] h-[100%] font-bold text-xl text-white outline-none"
       >
         <svg
           fill="none"
@@ -61,14 +63,21 @@ export default function TabsScrollBar({
           <path d="M15.75 19.5L8.25 12l7.5-7.5"></path>
         </svg>
       </button>
-      <div className="flex w-[80%] h-[100%] items-center overflow-scroll">
+      <div
+        ref={tabContinerRef}
+        className="flex w-[80%] h-[100%] items-center overflow-scroll relative"
+      >
         {lists.map((item, index) => {
           return (
             <Tab
+              lists={lists}
+              setLists={setLists}
+              tabContinerRef={tabContinerRef}
               key={index}
               index={index}
               tab={item}
               lastTabRef={index == tabsIndex ? lastTabRef : null}
+              currentListIndex={currentListIndex}
               setCurrentListIndex={setCurrentListIndex}
             />
           );

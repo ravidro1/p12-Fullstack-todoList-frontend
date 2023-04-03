@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function AddList({
   lists,
@@ -19,7 +19,10 @@ export default function AddList({
   const addList = () => {
     if (fieldsFull) {
       setLists((prev) => {
-        return [...prev, { name: tempNameOfList, list: [] }];
+        return [
+          ...prev,
+          { name: tempNameOfList, x: prev.length * 25, list: [] },
+        ];
       });
 
       setFirstTabIndex(lists.length - 3 < 0 ? 0 : lists.length - 3);
