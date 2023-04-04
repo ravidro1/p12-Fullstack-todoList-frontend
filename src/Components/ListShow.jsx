@@ -60,17 +60,20 @@ export default function ListShow({
         </h1>
         {/* </div> */}
 
-        <div className="w-[75%] h-[70%] flex items-center flex-col overflow-y-scroll border border-[#000] bg-[#a1bdb6]">
+        <div className="w-[75%] h-[70%] flex items-center flex-col overflow-y-scroll border border-[#fff] bg-[#a1bdb6]">
           <button
             onClick={() => setShowAddTask(true)}
-            style={{
-              backgroundColor:
-                lists.find((element, index) => index == currentListIndex).list
-                  .length % 2
-                  ? "#1fa3a7"
-                  : "#0e848873",
-            }}
-            className={"w-[100%] h-[15%] text-5xl"}
+            style={
+              {
+                // lists.find((element, index) => index == currentListIndex).list
+                //   .length % 2
+                //   ? "#1fa3a7"
+                //   : "#0e848873",
+              }
+            }
+            className={
+              "w-[100%] h-[15%] text-5xl bg-[#1fa3a7] hover:bg-[#228285]"
+            }
           >
             {" "}
             +{" "}

@@ -41,9 +41,9 @@ export default function Home() {
 
   return (
     <motion.div
-      initial={{ width: 0 }}
-      animate={{ width: "100%" }}
-      exit={{ y: "100%", transition: { duration: 0.3 } }}
+      // initial={{ width: 0 }}
+      // animate={{ width: "100%" }}
+      // exit={{ y: "100%", transition: { duration: 0.3 } }}
       onClick={(e) => closeAddTask(e)}
       className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
     >
@@ -79,7 +79,7 @@ export default function Home() {
       <div className="w-[50%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center overflow-hidden">
         <section className="w-[100%] h-[10%] flex border-b border-b-[#2C3333]">
           <TabsScrollBar
-          currentListIndex={currentListIndex}
+            currentListIndex={currentListIndex}
             setCurrentListIndex={setCurrentListIndex}
             lists={lists}
             setLists={setLists}

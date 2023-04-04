@@ -63,7 +63,7 @@ export default function TabsScrollBar({
           <path d="M15.75 19.5L8.25 12l7.5-7.5"></path>
         </svg>
       </button>
-      <div
+      <section
         ref={tabContinerRef}
         className="flex w-[80%] h-[100%] items-center overflow-scroll relative"
       >
@@ -82,7 +82,7 @@ export default function TabsScrollBar({
             />
           );
         })}
-      </div>
+      </section>
 
       <div className="flex w-[10%] h-[100%] items-center">
         <button

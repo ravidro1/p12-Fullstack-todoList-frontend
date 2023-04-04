@@ -31,9 +31,9 @@ export default function Login() {
 
   return (
     <motion.div
-      initial={{ width: 0 }}
-      animate={{ width: "100%" }}
-      exit={{ x: "100%", transition: { duration: 0.3 } }}
+      // initial={{ width: 0 }}
+      // animate={{ width: "100%" }}
+      // exit={{ x: "100%", transition: { duration: 0.3 } }}
       className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
     >
       <div className="text-[7vw] text-white"> Login </div>

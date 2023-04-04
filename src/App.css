@@ -7,13 +7,14 @@
   width: 5px;
   height: 0;
   /* border-left: 1px solid #2c3333; */
-  /* background-color: #1fa3a7; */
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+div::-webkit-scrollbar-track {
   width: 0;
-  display: none;
+  /* display: none; */
+  /* border-left: 1px solid black; */
+  background-color: white;
 }
 
 /* Handle */
@@ -30,3 +31,9 @@
   animation: forwards infinite;
   box-sizing: border-box;
 }
+
+/* input[type="checkbox"] {
+  width: 8%;
+
+  cursor: pointer;
+} */

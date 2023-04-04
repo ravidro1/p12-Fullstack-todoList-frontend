@@ -4,30 +4,44 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        tabToRight: {
-          // "0%": { transform: "translateX(0px)" },
-          // "100%": { transform: "translateX(200px)" },
-          "0%": { left: 0 },
-          "100%": { left: "25%" },
-        },
-        // tabToLeft: {
-        //   "0%": { backgroundColor: "transparent", zIndex: -1 },
-        //   "100%": { backgroundColor: "rgba(0, 0, 0, 0.8)", zIndex: 20 },
-        // },
-
         toDarkScreen: {
-          "0%": { backgroundColor: "transparent", zIndex: -1 },
-          "100%": { backgroundColor: "rgba(0, 0, 0, 0.8)", zIndex: 20 },
+          "0%": {
+            backgroundColor: "transparent",
+            zIndex: -1,
+            backdropFilter: "blur(0px)",
+          },
+          "100%": {
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            zIndex: 20,
+            backdropFilter: "blur(5px)",
+          },
         },
         toTransparentScreen: {
-          "0%": { backgroundColor: "rgba(0, 0, 0, 0.8)", zIndex: 20 },
-          "100%": { backgroundColor: "transparent", zIndex: -1 },
+          "0%": {
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            zIndex: 20,
+            backdropFilter: "blur(5px)",
+          },
+          "100%": {
+            backgroundColor: "transparent",
+            zIndex: -1,
+            backdropFilter: "blur(0px)",
+          },
+        },
+        spinToUp: {
+          "0%": { transform: "rotate(0)" },
+          "100%": { transform: "rotate(180deg)" },
+        },
+        spinToDown: {
+          "0%": { transform: "rotate(180deg)" },
+          "100%": { transform: "rotate(0)" },
         },
       },
       animation: {
         toDarkScreen: "toDarkScreen 0.5s both",
         toTransparentScreen: "toTransparentScreen 0.5s both",
-        tabToRight: "tabToRight 1s infinite",
+        spinToUp: "spinToUp 0.5s forwards",
+        spinToDown: "spinToDown 0.5s forwards",
       },
     },
   },

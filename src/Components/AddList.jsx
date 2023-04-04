@@ -37,12 +37,25 @@ export default function AddList({
 
   return (
     <section className="w-[100%] h-[100%] flex flex-col justify-around items-center">
-      <h1 className="text-9xl">Add List</h1>
+      <h1 className="text-9xl">ADD LIST</h1>
       <input
         className="w-[40%] h-[10%] border border-black rounded-xl outline-none px-5 text-black"
-        onChange={(e) => setTempNameOfList(e.target.value)}
+        onChange={(e) => {
+          let word = e.target.value;
+          if (word.length > 0) {
+            word = e.target.value.trimStart().toLocaleLowerCase().split("");
+
+            word = word.map((letter, index) => {
+              if (index == 0 || word[index - 1] == " ")
+                return letter.toUpperCase();
+              return letter;
+            });
+            word = word.toString();
+          }
+          setTempNameOfList(word.replaceAll(",", ""));
+        }}
         value={tempNameOfList}
-        placeholder="Name Of List"
+        placeholder="NAME OF LIST"
         type="text"
       />
       <button
