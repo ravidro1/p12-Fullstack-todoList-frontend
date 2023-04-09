@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import swal from "sweetalert";
 import AddTask from "./AddTask";
 import OneListItem from "./OneListItem";
+import {
+  DndContext,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 export default function ListShow({
   setLists,
@@ -51,6 +63,57 @@ export default function ListShow({
     });
   };
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    // console.log("Active: " + active.id);
+    // console.log("Over: " + over.id);
+
+    if (active.id != over.id) {
+      setLists((prev) => {
+        let tempAllLists = [...prev];
+        let tempCurrentList = tempAllLists[currentListIndex].list;
+
+        const tempActiveIndex = tempCurrentList
+          .map((item) => item.id)
+          .indexOf(active.id);
+
+        const tempOverIndex = tempCurrentList
+          .map((item) => item.id)
+          .indexOf(over.id);
+
+        const tempActiveItem = tempCurrentList[tempActiveIndex];
+
+        tempCurrentList = tempCurrentList.filter(
+          (item, index) => index != tempActiveIndex
+        );
+        tempCurrentList.splice(tempOverIndex, 0, tempActiveItem);
+
+        // tempCurrentList = arrayMove(
+        //   tempCurrentList,
+        //   tempActiveIndex,
+        //   tempOverIndex
+        // );
+
+        tempAllLists[currentListIndex] = {
+          ...tempAllLists[currentListIndex],
+          list: tempCurrentList,
+        };
+        console.log(tempAllLists);
+
+        return tempAllLists;
+        // return arrayMove(prev, tempActiveIndex, tempOverIndex);
+      });
+    }
+  };
+
+  const touchSensor = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
   return (
     <div className="w-[100%] h-[100%] flex justify-center items-center flex-col text-white relative">
       <section className="w-[100%] h-[100%] flex justify-around items-center flex-col ">
@@ -78,22 +141,38 @@ export default function ListShow({
             {" "}
             +{" "}
           </button>
-          {lists
-            .find((element, index) => index == currentListIndex)
-            .list.map((item, index) => {
-              if (item?.content?.length > 0) {
-                return (
-                  <OneListItem
-                    setLists={setLists}
-                    currentListIndex={currentListIndex}
-                    key={index}
-                    item={item}
-                    itemIndex={index}
-                    lists={lists}
-                  />
-                );
+
+          <DndContext
+            sensors={touchSensor}
+            modifiers={[restrictToVerticalAxis]}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={
+                lists.find((element, index) => index == currentListIndex).list
               }
-            })}
+              strategy={verticalListSortingStrategy}
+            >
+              {lists
+                .find((element, index) => index == currentListIndex)
+                .list.map((item, index) => {
+                  if (item?.content?.length > 0) {
+                    return (
+                      <OneListItem
+                        id={item.id}
+                        setLists={setLists}
+                        currentListIndex={currentListIndex}
+                        key={item.id}
+                        item={item}
+                        itemIndex={index}
+                        lists={lists}
+                      />
+                    );
+                  }
+                })}
+            </SortableContext>
+          </DndContext>
         </div>
 
         <button

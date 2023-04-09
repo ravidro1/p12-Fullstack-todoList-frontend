@@ -76,7 +76,7 @@ export default function Home() {
         </svg>
       </button>
 
-      <div className="w-[50%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center overflow-hidden">
+      <div className="w-[50%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center ">
         <section className="w-[100%] h-[10%] flex border-b border-b-[#2C3333]">
           <TabsScrollBar
             currentListIndex={currentListIndex}

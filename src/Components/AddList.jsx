@@ -21,7 +21,7 @@ export default function AddList({
       setLists((prev) => {
         return [
           ...prev,
-          { name: tempNameOfList, x: prev.length * 25, list: [] },
+          { name: tempNameOfList, list: [] },
         ];
       });
 

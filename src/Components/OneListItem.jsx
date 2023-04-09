@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export default function OneListItem({
   item,
@@ -8,8 +10,15 @@ export default function OneListItem({
   currentListIndex,
   lists,
   setLists,
+  id,
 }) {
-  // const selfRef = useRef();
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   const deleteItem = () => {
     setLists((prev) => {
@@ -87,7 +96,13 @@ export default function OneListItem({
 
   return (
     <div
-      style={{ backgroundColor: itemIndex % 2 ? "#1fa3a7" : "#0e848873" }}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={{
+        ...style,
+        backgroundColor: itemIndex % 2 ? "#1fa3a7" : "#0e848873",
+      }}
       className={"w-[100%] px-4 text-1xl text-white"}
     >
       <section
@@ -97,9 +112,7 @@ export default function OneListItem({
       >
         <div className="w-[100%] h-[80%] flex flex-row">
           <div className="flex w-[92%] items-center">
-            <label
-              className="cursor-pointer relative flex flex-col items-center justify-center"
-            >
+            <label className="cursor-pointer relative flex flex-col items-center justify-center">
               <input
                 className="w-[20px] h-[20px] appearance-none border-[#fff] border-2 rounded-sm outline-none"
                 onChange={checkedItem}
