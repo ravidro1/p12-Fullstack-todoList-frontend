@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { motion } from "framer-motion";
+import { useContext } from "react";
+import { Context } from "../App";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -10,7 +11,12 @@ export default function Login() {
   const [tempPassword, setTempPassword] = useState("");
   const [fieldsFull, setFieldsFull] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const { sizePerScreen } = useContext(Context);
+  useEffect(() => {
+    console.log(sizePerScreen);
+  }, [sizePerScreen]);
 
   useEffect(() => {
     if (tempUsername.length > 0 && tempPassword.length > 0) setFieldsFull(true);
@@ -32,32 +38,53 @@ export default function Login() {
   };
 
   return (
-    <motion.div
-      // initial={{ width: 0 }}
-      // animate={{ width: "100%" }}
-      // exit={{ x: "100%", transition: { duration: 0.3 } }}
-      className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
-    >
-      <div className="text-[7vw] text-white"> Login </div>
-      <div className="w-[40%] h-[65%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center">
-        <section className="w-[100%] h-[35%] flex flex-col justify-around items-center">
+    <div className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight">
+      <div className="2xl:text-9xl lg:text-7xl text-7xl text-white">
+        {" "}
+        Login{" "}
+      </div>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="lg:w-[35%] w-[80%] h-[60%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center"
+      >
+        <section className="w-[100%] lg:h-[45%] h-[40%] flex flex-col justify-around items-center lg:pt-[10%] pt-[15%] lg:pb-[5%] pb-[2%]">
           <input
             placeholder="Username"
-            className="w-[45%] h-[27%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[45%] w-[65%] h-[35%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempUsername(e.target.value)}
             value={tempUsername}
           />
           <input
             placeholder="Password"
-            className="w-[45%] h-[27%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[45%] w-[65%] h-[35%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempPassword(e.target.value)}
             value={tempPassword}
           />{" "}
         </section>
 
-        <section className="w-[100%] h-[20%] flex flex-col justify-around items-center">
+        <section className="w-[100%] lg:h-[40%] h-[45%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%] pb-[12%] pt-[20%]">
+          <button
+            disabled={!fieldsFull}
+            onClick={submitLogin}
+            className={
+              "lg:w-[35%] w-[45%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold lg:text-[1.5vw] text-[5vw] outline-none " +
+              `${!fieldsFull && "opacity-60"}`
+            }
+          >
+            Login{" "}
+          </button>
+
+          <button
+            onClick={() => navigate("/SignUp")}
+            className="w-[35%] h-[10%] text-white font-semibold lg:text-[1.75vw] text-[4vw] outline-none hover:text-red-900"
+          >
+            To Register{" "}
+          </button>
+        </section>
+
+        <section className="w-[100%] h-[10%] flex flex-col justify-around items-center mb-[3%]">
           {loading && (
             <svg
               aria-hidden="true"
@@ -77,27 +104,7 @@ export default function Login() {
             </svg>
           )}
         </section>
-
-        <section className="w-[100%] h-[20%] flex flex-col justify-around items-center">
-          <button
-            disabled={!fieldsFull}
-            onClick={submitLogin}
-            className={
-              "w-[35%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold text-[1.5vw] outline-none " +
-              `${!fieldsFull && "opacity-60"}`
-            }
-          >
-            Login{" "}
-          </button>
-
-          <button
-            onClick={() => navigate("/SignUp")}
-            className="w-[35%] h-[10%] text-white font-semibold text-[1.75vw] outline-none hover:text-red-900"
-          >
-            To Register{" "}
-          </button>
-        </section>
-      </div>
-    </motion.div>
+      </form>
+    </div>
   );
 }

@@ -19,10 +19,7 @@ export default function AddList({
   const addList = () => {
     if (fieldsFull) {
       setLists((prev) => {
-        return [
-          ...prev,
-          { name: tempNameOfList, list: [] },
-        ];
+        return [...prev, { name: tempNameOfList, list: [] }];
       });
 
       setFirstTabIndex(lists.length - 3 < 0 ? 0 : lists.length - 3);
@@ -36,10 +33,11 @@ export default function AddList({
   };
 
   return (
-    <section className="w-[100%] h-[100%] flex flex-col justify-around items-center">
-      <h1 className="text-9xl">ADD LIST</h1>
+    <form className="w-[100%] h-[100%] flex flex-col justify-around items-center">
+      <h1 className="2xl:text-9xl lg:text-8xl text-6xl">ADD LIST</h1>
+
       <input
-        className="w-[40%] h-[10%] border border-black rounded-xl outline-none px-5 text-black"
+        className="lg:w-[45%] w-[60%] h-[15%] border border-black rounded-xl outline-none px-5 text-black"
         onChange={(e) => {
           let word = e.target.value;
           if (word.length > 0) {
@@ -58,17 +56,18 @@ export default function AddList({
         placeholder="NAME OF LIST"
         type="text"
       />
+
       <button
         disabled={!fieldsFull}
         className={
-          "w-[25%] h-[9%] text-3xl bg-[#2E4F4F] border border-white rounded-lg " +
+          "2xl:w-[30%] lg:w-[35%] w-[50%] h-[12%]  2xl:text-4xl text-3xl bg-[#2E4F4F] border border-white rounded-lg " +
           `${!fieldsFull && "opacity-60"}`
         }
         onClick={addList}
       >
         {" "}
-        submit{" "}
+        Submit{" "}
       </button>
-    </section>
+    </form>
   );
 }

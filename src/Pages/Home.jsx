@@ -4,8 +4,6 @@ import AddList from "../Components/AddList";
 import ListShow from "../Components/ListShow";
 import TabsScrollBar from "../Components/TabsScrollBar";
 
-import { motion } from "framer-motion";
-
 export default function Home() {
   const navigate = useNavigate();
 
@@ -40,10 +38,7 @@ export default function Home() {
   };
 
   return (
-    <motion.div
-      // initial={{ width: 0 }}
-      // animate={{ width: "100%" }}
-      // exit={{ y: "100%", transition: { duration: 0.3 } }}
+    <div
       onClick={(e) => closeAddTask(e)}
       className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
     >
@@ -60,7 +55,7 @@ export default function Home() {
 
       <button
         onClick={logout}
-        className="w-[5%] h-[5%] self-start mx-5 text-white"
+        className="lg:w-[5%] w-[15%] h-[5%] self-start mx-5 text-white"
       >
         <svg
           fill="currentColor"
@@ -76,8 +71,8 @@ export default function Home() {
         </svg>
       </button>
 
-      <div className="w-[50%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center ">
-        <section className="w-[100%] h-[10%] flex border-b border-b-[#2C3333]">
+      <div className="lg:w-[50%] w-[85%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center overflow-hidden">
+        <section className="w-[100%] lg:h-[10%] h-[15%] flex border-b border-b-[#2C3333]">
           <TabsScrollBar
             currentListIndex={currentListIndex}
             setCurrentListIndex={setCurrentListIndex}
@@ -119,7 +114,7 @@ export default function Home() {
           )}
         </section>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

@@ -107,6 +107,7 @@ export default function AddTask({
       />
 
       <button
+        type="submit"
         onClick={addTask}
         className="w-[100%] h-[15%] bg-[#CBE4DE]  outline-none text-xl"
       >

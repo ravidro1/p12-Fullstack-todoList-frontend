@@ -2,6 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fontFamily: {
+      BebasNeue: "Bebas Neue",
+      cursive: "cursive",
+    },
     extend: {
       keyframes: {
         toDarkScreen: {

@@ -11,7 +11,7 @@ export default function SignUp() {
   const [tempVerifyPassword, setTempVerifyPassword] = useState("");
   const [fieldsFull, setFieldsFull] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (
@@ -31,45 +31,69 @@ export default function SignUp() {
       setTempUsername("");
       setTempPassword("");
       setTempVerifyPassword("");
+
+      navigate("/");
     } else {
       alert("Both Inputs Need To Be Fill For Login!!!");
     }
   };
+  //
 
   return (
-    <motion.div
-      // initial={{ width: 0 }}
-      // animate={{ width: "100%" }}
-      // exit={{ x: "-100%", transition: { duration: 0.3 } }}
-      className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight"
-    >
-      <div className="text-[7vw] text-white"> Register </div>
-      <div className="w-[40%] h-[65%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center ">
-        <section className="w-[100%] h-[40%] flex flex-col justify-around items-center">
+    <div className="w-[100%] h-[100%] bg-[#274f4f] flex justify-around items-center flex-col font-extralight">
+      <div className="2xl:text-9xl lg:text-7xl text-7xl text-white">
+        {" "}
+        Register{" "}
+      </div>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="lg:w-[35%] w-[80%] h-[60%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center"
+      >
+        <section className="w-[100%] lg:h-[45%] h-[40%] flex flex-col justify-around items-center lg:pt-[7%] pt-[10%]">
           <input
             placeholder="Username"
-            className="w-[45%] h-[27%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[45%] w-[65%] h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempUsername(e.target.value)}
             value={tempUsername}
           />
           <input
             placeholder="Password"
-            className="w-[45%] h-[27%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[45%] w-[65%] h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempPassword(e.target.value)}
             value={tempPassword}
           />{" "}
           <input
             placeholder="Verify Password"
-            className="w-[45%] h-[27%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[45%] w-[65%] h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempVerifyPassword(e.target.value)}
             value={tempVerifyPassword}
-          />{" "}
+          />
         </section>
 
-        <section className="w-[100%] h-[20%] flex flex-col justify-around items-center">
+        <section className="w-[100%] lg:h-[40%] h-[45%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%] pb-[12%] pt-[20%]">
+          <button
+            disabled={!fieldsFull}
+            onClick={submitSignUp}
+            className={
+              "lg:w-[35%] w-[45%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold lg:text-[1.5vw] text-[5vw] outline-none " +
+              `${!fieldsFull && "opacity-60"}`
+            }
+          >
+            Register{" "}
+          </button>
+
+          <button
+            onClick={() => navigate("/")}
+            className="w-[35%] h-[10%] text-white font-semibold lg:text-[1.75vw] text-[4vw] outline-none hover:text-red-900"
+          >
+            To Login{" "}
+          </button>
+        </section>
+
+        <section className="w-[100%] h-[10%] flex flex-col justify-around items-center mb-[3%]">
           {loading && (
             <svg
               aria-hidden="true"
@@ -89,26 +113,7 @@ export default function SignUp() {
             </svg>
           )}
         </section>
-
-        <section className="w-[100%] h-[20%] flex flex-col justify-around items-center">
-          <button
-            disabled={!fieldsFull}
-            onClick={submitSignUp}
-            className={
-              "w-[35%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold text-[1.5vw] outline-none  " +
-              `${!fieldsFull && "opacity-60"}`
-            }
-          >
-            Register{" "}
-          </button>
-          <button
-            onClick={() => navigate("/")}
-            className="w-[35%] h-[10%] text-white font-semibold text-[1.75vw] outline-none hover:text-red-900"
-          >
-            To Login{" "}
-          </button>
-        </section>
-      </div>
-    </motion.div>
+      </form>
+    </div>
   );
 }
