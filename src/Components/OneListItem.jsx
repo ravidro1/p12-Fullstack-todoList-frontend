@@ -97,10 +97,15 @@ export default function OneListItem({
   return (
     <div
       ref={setNodeRef}
+      // ref={(e) => {
+      //   setNodeRef && (setNodeRef.current = e);
+      //   testRef && (testRef.current = e);
+      // }}
       {...attributes}
       {...listeners}
       style={{
         ...style,
+        userSelect: "none",
         backgroundColor: itemIndex % 2 ? "#1fa3a7" : "#0e848873",
       }}
       className={"w-[100%] px-4 text-1xl text-white"}
@@ -157,6 +162,28 @@ export default function OneListItem({
             </svg>
           </button>
         </div>
+
+        <section
+          style={{
+            height: 0 + (item.isOpen ? 100 : 0) + "px",
+            // display: item.isOpen ? "block" : "none",
+          }}
+          className="w-[100%] overflow-hidden oneListItemOpenBigWindowAnimation"
+        >
+          {/* {item.isOpen && ( */}
+          <>
+            <section className="w-[100%] border-t border-white py-1">
+              <div className="flex justify-center"> Content: </div>
+              <div> {item.content} </div>
+            </section>
+            <section className="w-[100%] flex justify-around border-y border-white py-1">
+              <div> Start Date: {item.startDate} </div>
+              <div> End Date: {item.endDate} </div>
+            </section>
+          </>
+          {/* )} */}
+        </section>
+
         <button
           onClick={changeIsOpen}
           className="w-[10%] rounded-lg flex justify-center hover:bg-[rgb(0,0,0,0.2)]"
@@ -196,19 +223,6 @@ export default function OneListItem({
           )}
         </button>
       </section>
-
-      {item.isOpen && (
-        <section className="w-[100%] ">
-          <section className="w-[100%] border-t border-white py-1">
-            <div className="flex justify-center"> Content: </div>
-            <div> {item.content} </div>
-          </section>
-          <section className="w-[100%] flex justify-around border-y border-white py-1">
-            <div> Start Date: {item.startDate} </div>
-            <div> End Date: {item.endDate} </div>
-          </section>
-        </section>
-      )}
     </div>
   );
 }

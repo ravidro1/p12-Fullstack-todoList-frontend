@@ -115,7 +115,7 @@ export default function ListShow({
   );
 
   return (
-    <div className="w-[100%] h-[100%] flex justify-center items-center flex-col text-white relative">
+    <div className="w-[100%] h-[100%] flex justify-center items-center flex-col text-white relative ">
       <section className="w-[100%] h-[100%] flex justify-around items-center flex-col ">
         {/* <div className="w-[100%] h-[20%] flex flex-col justify-center items-center text-3xl  capitalize px-3 "> */}
         <h1 className="text-7xl h-[10%]">
@@ -123,17 +123,9 @@ export default function ListShow({
         </h1>
         {/* </div> */}
 
-        <div className="w-[75%] h-[70%] flex items-center flex-col overflow-y-scroll border border-[#fff] bg-[#a1bdb6]">
+        <div className="w-[75%] h-[70%] flex items-center flex-col border border-[#fff] bg-[#a1bdb6]">
           <button
             onClick={() => setShowAddTask(true)}
-            style={
-              {
-                // lists.find((element, index) => index == currentListIndex).list
-                //   .length % 2
-                //   ? "#1fa3a7"
-                //   : "#0e848873",
-              }
-            }
             className={
               "w-[100%] h-[15%] text-5xl bg-[#1fa3a7] hover:bg-[#228285]"
             }
@@ -142,37 +134,39 @@ export default function ListShow({
             +{" "}
           </button>
 
-          <DndContext
-            sensors={touchSensor}
-            modifiers={[restrictToVerticalAxis]}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext
-              items={
-                lists.find((element, index) => index == currentListIndex).list
-              }
-              strategy={verticalListSortingStrategy}
+          <div className={"w-[100%] h-[85%] overflow-y-auto"}>
+            <DndContext
+              sensors={touchSensor}
+              modifiers={[restrictToVerticalAxis]}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
             >
-              {lists
-                .find((element, index) => index == currentListIndex)
-                .list.map((item, index) => {
-                  if (item?.content?.length > 0) {
-                    return (
-                      <OneListItem
-                        id={item.id}
-                        setLists={setLists}
-                        currentListIndex={currentListIndex}
-                        key={item.id}
-                        item={item}
-                        itemIndex={index}
-                        lists={lists}
-                      />
-                    );
-                  }
-                })}
-            </SortableContext>
-          </DndContext>
+              <SortableContext
+                items={
+                  lists.find((element, index) => index == currentListIndex).list
+                }
+                strategy={verticalListSortingStrategy}
+              >
+                {lists
+                  .find((element, index) => index == currentListIndex)
+                  .list.map((item, index) => {
+                    if (item?.content?.length > 0) {
+                      return (
+                        <OneListItem
+                          id={item.id}
+                          setLists={setLists}
+                          currentListIndex={currentListIndex}
+                          key={item.id}
+                          item={item}
+                          itemIndex={index}
+                          lists={lists}
+                        />
+                      );
+                    }
+                  })}
+              </SortableContext>
+            </DndContext>
+          </div>
         </div>
 
         <button

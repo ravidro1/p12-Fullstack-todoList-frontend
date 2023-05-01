@@ -49,6 +49,7 @@ export default function Login() {
       >
         <section className="w-[100%] lg:h-[45%] h-[40%] flex flex-col justify-around items-center lg:pt-[10%] pt-[15%] lg:pb-[5%] pb-[2%]">
           <input
+            role="input_1"
             placeholder="Username"
             className="lg:w-[45%] w-[65%] h-[35%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
@@ -56,6 +57,7 @@ export default function Login() {
             value={tempUsername}
           />
           <input
+            role="input_2"
             placeholder="Password"
             className="lg:w-[45%] w-[65%] h-[35%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
@@ -66,6 +68,7 @@ export default function Login() {
 
         <section className="w-[100%] lg:h-[40%] h-[45%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%] pb-[12%] pt-[20%]">
           <button
+            role="button"
             disabled={!fieldsFull}
             onClick={submitLogin}
             className={
