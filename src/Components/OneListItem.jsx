@@ -189,7 +189,7 @@ export default function OneListItem({
           className="w-[10%] rounded-lg flex justify-center hover:bg-[rgb(0,0,0,0.2)]"
         >
           {" "}
-          {item.isOpen ? (
+          {/* {item.isOpen ? (
             <svg
               className="h-8 w-8"
               viewBox="0 0 24 24"
@@ -219,8 +219,25 @@ export default function OneListItem({
               <path stroke="none" d="M0 0h24v24H0z" />{" "}
               <polyline points="7 7 12 12 17 7" />{" "}
               <polyline points="7 13 12 18 17 13" />
-            </svg>
-          )}
+            </svg> */}
+          {/* )}
+           */}
+          <svg
+            style={{
+              transform: item.isOpen ? "rotate(0deg)" : "rotate(180deg)",
+            }}
+            className="h-8 w-8 arrowAnimation"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {" "}
+            <polyline points="17 11 12 6 7 11" />{" "}
+            <polyline points="17 18 12 13 7 18" />
+          </svg>
         </button>
       </section>
     </div>
