@@ -15,7 +15,7 @@ export default function TabsScrollBar({
   setTabsIndex,
 }) {
   const lastTabRef = useRef();
-  const tabContinerRef = useRef();
+  const tabContainerRef = useRef();
 
   useEffect(() => {
     if (lists.length > 0 && firstTabIndex == null && lastTabIndex == null) {
@@ -23,7 +23,7 @@ export default function TabsScrollBar({
       if (lists.length > 4) setLastTabIndex(3);
       else setLastTabIndex(lists.length - 1);
     }
-  }, []);
+  }, [lists]);
 
   useEffect(() => {
     lastTabRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,6 +38,7 @@ export default function TabsScrollBar({
         setTabsIndex(lastTabIndex + 1);
       }
     } else {
+      console.log("left");
       if (firstTabIndex > 0) {
         setFirstTabIndex(firstTabIndex - 1);
         setLastTabIndex(lastTabIndex - 1);
@@ -64,7 +65,7 @@ export default function TabsScrollBar({
         </svg>
       </button>
       <section
-        ref={tabContinerRef}
+        ref={tabContainerRef}
         className="flex w-[80%] h-[100%] items-center overflow-scroll relative"
       >
         {lists.map((item, index) => {
@@ -72,7 +73,7 @@ export default function TabsScrollBar({
             <Tab
               lists={lists}
               setLists={setLists}
-              tabContinerRef={tabContinerRef}
+              tabContainerRef={tabContainerRef}
               key={index}
               index={index}
               tab={item}

@@ -14,6 +14,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import axios from "axios";
+import useAuthContext from "../context/useAuthContext";
 
 export default function ListShow({
   setLists,
@@ -26,6 +28,9 @@ export default function ListShow({
   setShowAddTask,
   addTaskWindowRef,
 }) {
+  console.log(lists);
+  const { token } = useAuthContext();
+
   const deleteList = () => {
     swal({
       title: "Are You Sure?",
@@ -38,6 +43,17 @@ export default function ListShow({
         swal("List Has Been Deleted!", {
           icon: "success",
         });
+
+        axios.post(
+          "/api/list/delete-list",
+          { list_id: lists[currentListIndex].id },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
         setLists((prev) => {
           return [
             ...prev.filter((element, index) => index != currentListIndex),
@@ -71,7 +87,7 @@ export default function ListShow({
     if (active.id != over.id) {
       setLists((prev) => {
         let tempAllLists = [...prev];
-        let tempCurrentList = tempAllLists[currentListIndex].list;
+        let tempCurrentList = tempAllLists[currentListIndex].tasks;
 
         const tempActiveIndex = tempCurrentList
           .map((item) => item.id)
@@ -96,9 +112,8 @@ export default function ListShow({
 
         tempAllLists[currentListIndex] = {
           ...tempAllLists[currentListIndex],
-          list: tempCurrentList,
+          tasks: tempCurrentList,
         };
-        console.log(tempAllLists);
 
         return tempAllLists;
         // return arrayMove(prev, tempActiveIndex, tempOverIndex);
@@ -117,11 +132,9 @@ export default function ListShow({
   return (
     <div className="w-[100%] h-[100%] flex justify-center items-center flex-col text-white relative ">
       <section className="w-[100%] h-[100%] flex justify-around items-center flex-col ">
-        {/* <div className="w-[100%] h-[20%] flex flex-col justify-center items-center text-3xl  capitalize px-3 "> */}
         <h1 className="text-7xl h-[10%]">
           {lists.find((element, index) => index == currentListIndex).name}
         </h1>
-        {/* </div> */}
 
         <div className="w-[75%] h-[70%] flex items-center flex-col border border-[#fff] bg-[#a1bdb6]">
           <button
@@ -143,13 +156,14 @@ export default function ListShow({
             >
               <SortableContext
                 items={
-                  lists.find((element, index) => index == currentListIndex).list
+                  lists.find((element, index) => index == currentListIndex)
+                    .tasks
                 }
                 strategy={verticalListSortingStrategy}
               >
                 {lists
                   .find((element, index) => index == currentListIndex)
-                  .list.map((item, index) => {
+                  .tasks.map((item, index) => {
                     if (item?.content?.length > 0) {
                       return (
                         <OneListItem

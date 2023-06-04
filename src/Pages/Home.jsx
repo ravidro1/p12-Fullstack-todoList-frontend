@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import AddList from "../Components/AddList";
 import ListShow from "../Components/ListShow";
 import TabsScrollBar from "../Components/TabsScrollBar";
+import axios from "axios";
+import useAuthContext from "../context/useAuthContext";
 
 export default function Home() {
   const navigate = useNavigate();
 
+  const { token } = useAuthContext();
   const [lists, setLists] = useState([]);
 
   const [currentListIndex, setCurrentListIndex] = useState();
@@ -17,13 +20,46 @@ export default function Home() {
   const [showAddTask, setShowAddTask] = useState(null);
 
   useEffect(() => {
-    // getLists()
+    getLists();
   }, []);
 
-  const getLists = () => {};
+  const getLists = () => {
+    axios
+      .get("/api/list/get-all-list", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        // add isOpen field for each task
+        const tempLists = res.data.map((list) => {
+          return {
+            ...list,
+            tasks: list.tasks.map((task) => {
+              return { ...task, isOpen: false };
+            }),
+          };
+        });
 
-  const logout = () => {
-    navigate("/");
+        setLists(tempLists);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const logout = async () => {
+    axios
+      .post("/api/user/logout")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        navigate("/");
+      });
   };
 
   const addTaskWindowRef = useRef();

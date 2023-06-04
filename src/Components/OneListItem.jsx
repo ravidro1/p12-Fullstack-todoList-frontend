@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import axios from "axios";
+import useAuthContext from "../context/useAuthContext";
 
 export default function OneListItem({
   item,
@@ -12,6 +14,8 @@ export default function OneListItem({
   setLists,
   id,
 }) {
+  const { token } = useAuthContext();
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: id });
 
@@ -20,65 +24,92 @@ export default function OneListItem({
     transition,
   };
 
-  const deleteItem = () => {
-    setLists((prev) => {
-      return [
-        ...prev.map((element, index) => {
-          if (index == currentListIndex) {
-            return {
-              ...lists.find((element, index) => index == currentListIndex),
-              list: [
-                ...lists
-                  .find((element, index) => index == currentListIndex)
-                  .list.filter((element, index) => index != itemIndex),
-              ],
-            };
-          }
-          return element;
-        }),
-      ];
-    });
+  const deleteItem = async () => {
+    try {
+      await axios.post(
+        "/api/list/delete-task",
+        { task_id: lists[currentListIndex].tasks[itemIndex].id },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setLists((prev) => {
+        return [
+          ...prev.map((element, index) => {
+            if (index == currentListIndex) {
+              return {
+                ...lists[currentListIndex],
+                tasks: [
+                  ...lists[currentListIndex].tasks.filter(
+                    (element, index) => index != itemIndex
+                  ),
+                ],
+              };
+            }
+            return element;
+          }),
+        ];
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const checkedItem = () => {
-    setLists((prev) => {
-      return [
-        ...prev.map((element, index) => {
-          if (index == currentListIndex) {
-            return {
-              ...lists.find((element, index) => index == currentListIndex),
-              list: [
-                ...lists
-                  .find((inElement, index) => index == currentListIndex)
-                  .list.map((inElement, index) => {
+  const checkedItem = async () => {
+    console.log(item);
+    try {
+      const res = await axios.post(
+        "/api/list/edit-is-complete-task",
+        {
+          task_id: item.id,
+          is_complete: !item.is_complete,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setLists((prev) => {
+        return [
+          ...prev.map((element, index) => {
+            if (index == currentListIndex) {
+              return {
+                ...lists[currentListIndex],
+                tasks: [
+                  ...lists[currentListIndex].tasks.map((inElement, index) => {
                     if (index == itemIndex) {
-                      return { ...inElement, checked: !inElement.checked };
+                      return {
+                        ...inElement,
+                        is_complete: !inElement.is_complete,
+                      };
                     }
                     return inElement;
                   }),
-              ],
-            };
-          }
-          return element;
-        }),
-      ];
-    });
+                ],
+              };
+            }
+            return element;
+          }),
+        ];
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const changeIsOpen = () => {
-    // selfRef.current.classList.remove("animate-spinToUp", "animate-spinToDown");
-
-    // selfRef.current.classList.add(
-    //   !item.isOpen ? "animate-spinToUp" : "animate-spinToDown"
-    // );
-
     setLists((prev) => {
       return [
         ...prev.map((element, index) => {
           if (index == currentListIndex) {
             return {
               ...element,
-              list: element.list.map((inElement, i) => {
+              tasks: element.tasks.map((inElement, i) => {
                 if (i == itemIndex)
                   return {
                     ...inElement,
@@ -94,13 +125,20 @@ export default function OneListItem({
     });
   };
 
+  const getFormatTime = (time) => {
+    const timeType = new Date(time);
+    const tempTime =
+      timeType.getDate() +
+      "/" +
+      timeType.getMonth() +
+      "/" +
+      timeType.getFullYear();
+    return tempTime;
+  };
+
   return (
     <div
       ref={setNodeRef}
-      // ref={(e) => {
-      //   setNodeRef && (setNodeRef.current = e);
-      //   testRef && (testRef.current = e);
-      // }}
       {...attributes}
       {...listeners}
       style={{
@@ -121,12 +159,12 @@ export default function OneListItem({
               <input
                 className="w-[20px] h-[20px] appearance-none border-[#fff] border-2 rounded-sm outline-none"
                 onChange={checkedItem}
-                checked={item.checked}
+                checked={item.is_complete}
                 type={"checkbox"}
               />
               <FontAwesomeIcon
                 icon={faCheck}
-                style={{ opacity: item.checked ? 1 : 0 }}
+                style={{ opacity: item.is_complete ? 1 : 0 }}
                 className="text-[fff]  w-[60%] h-[60%] absolute check-1 flex flex-col items-center justify-center"
               />
             </label>
@@ -134,7 +172,7 @@ export default function OneListItem({
             <p
               className={
                 "px-5  break-all flex items-center text-lg font-semibold decoration-[2px] decoration-[#1fa3a7] " +
-                (item.checked ? "line-through" : "")
+                (item.is_complete ? "line-through" : "")
               }
             >
               {" "}
@@ -166,62 +204,25 @@ export default function OneListItem({
         <section
           style={{
             height: 0 + (item.isOpen ? 100 : 0) + "px",
-            // display: item.isOpen ? "block" : "none",
           }}
           className="w-[100%] overflow-hidden oneListItemOpenBigWindowAnimation"
         >
-          {/* {item.isOpen && ( */}
           <>
             <section className="w-[100%] border-t border-white py-1">
               <div className="flex justify-center"> Content: </div>
               <div> {item.content} </div>
             </section>
             <section className="w-[100%] flex justify-around border-y border-white py-1">
-              <div> Start Date: {item.startDate} </div>
-              <div> End Date: {item.endDate} </div>
+              <div> Start Date: {getFormatTime(item.start_date)} </div>
+              <div> End Date: {getFormatTime(item.end_date)} </div>
             </section>
           </>
-          {/* )} */}
         </section>
 
         <button
           onClick={changeIsOpen}
           className="w-[10%] rounded-lg flex justify-center hover:bg-[rgb(0,0,0,0.2)]"
         >
-          {" "}
-          {/* {item.isOpen ? (
-            <svg
-              className="h-8 w-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {" "}
-              <polyline points="17 11 12 6 7 11" />{" "}
-              <polyline points="17 18 12 13 7 18" />
-            </svg>
-          ) : (
-            <svg
-              className={"h-8 w-8 "}
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {" "}
-              <path stroke="none" d="M0 0h24v24H0z" />{" "}
-              <polyline points="7 7 12 12 17 7" />{" "}
-              <polyline points="7 13 12 18 17 13" />
-            </svg> */}
-          {/* )}
-           */}
           <svg
             style={{
               transform: item.isOpen ? "rotate(0deg)" : "rotate(180deg)",

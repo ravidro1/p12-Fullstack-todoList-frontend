@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
+import axios from "axios";
+import useAuthContext from "../context/useAuthContext";
 
 export default function SignUp() {
   const navigate = useNavigate();
+
+  const { setToken } = useAuthContext();
 
   const [tempUsername, setTempUsername] = useState("");
   const [tempPassword, setTempPassword] = useState("");
   const [tempVerifyPassword, setTempVerifyPassword] = useState("");
   const [fieldsFull, setFieldsFull] = useState(false);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (
@@ -23,16 +27,28 @@ export default function SignUp() {
     else setFieldsFull(false);
   }, [tempUsername, tempPassword, tempVerifyPassword]);
 
-  const submitSignUp = () => {
+  const submitSignUp = async () => {
     if (fieldsFull) {
-      console.log(tempUsername);
-      console.log(tempPassword);
+      setLoading(true);
+      try {
+        const res = await axios.post("/api/user/signup", {
+          username: tempUsername,
+          password: tempPassword,
+          password_confirm: tempVerifyPassword,
+        });
+        console.log(res);
+        setToken(res.data?.token);
 
-      setTempUsername("");
-      setTempPassword("");
-      setTempVerifyPassword("");
+        setTempUsername("");
+        setTempPassword("");
+        setTempVerifyPassword("");
 
-      navigate("/");
+        setLoading(false);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     } else {
       alert("Both Inputs Need To Be Fill For Login!!!");
     }

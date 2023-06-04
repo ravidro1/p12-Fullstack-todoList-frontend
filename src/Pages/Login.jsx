@@ -3,19 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
 import { Context } from "../App";
+import axios from "axios";
+import useAuthContext from "../context/useAuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  const { setToken } = useAuthContext();
 
   const [tempUsername, setTempUsername] = useState("");
   const [tempPassword, setTempPassword] = useState("");
   const [fieldsFull, setFieldsFull] = useState(false);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { sizePerScreen } = useContext(Context);
+
   useEffect(() => {
-    console.log(sizePerScreen);
+    // console.log(sizePerScreen);
   }, [sizePerScreen]);
 
   useEffect(() => {
@@ -23,15 +28,27 @@ export default function Login() {
     else setFieldsFull(false);
   }, [tempUsername, tempPassword]);
 
-  const submitLogin = () => {
+  const submitLogin = async () => {
+    setLoading(true);
     if (tempUsername.length > 0 && tempPassword.length > 0) {
-      console.log(tempUsername);
-      console.log(tempPassword);
+      try {
+        const res = await axios.post("/api/user/login", {
+          username: tempUsername,
+          password: tempPassword,
+        });
 
-      setTempUsername("");
-      setTempPassword("");
+        setToken(res.data?.token);
 
-      navigate("/Home");
+        setLoading(false);
+
+        setTempUsername("");
+        setTempPassword("");
+
+        navigate("/Home");
+      } catch (e) {
+        console.log(e);
+        setLoading(false);
+      }
     } else {
       alert("Both Inputs Need To Be Fill For Login!!!");
     }

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import useAuthContext from "../context/useAuthContext";
+import axios from "axios";
 
 export default function AddList({
   lists,
@@ -8,6 +10,8 @@ export default function AddList({
   setLastTabIndex,
   setTabsIndex,
 }) {
+  const { token } = useAuthContext();
+
   const [tempNameOfList, setTempNameOfList] = useState("");
   const [fieldsFull, setFieldsFull] = useState(false);
 
@@ -16,24 +20,42 @@ export default function AddList({
     else setFieldsFull(false);
   }, [tempNameOfList]);
 
-  const addList = () => {
+  const addList = async () => {
     if (fieldsFull) {
-      setLists((prev) => {
-        return [...prev, { name: tempNameOfList, list: [] }];
-      });
+      try {
+        const res = await axios.post(
+          "/api/list/create-new-list",
+          {
+            name: tempNameOfList,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
 
-      setFirstTabIndex(lists.length - 3 < 0 ? 0 : lists.length - 3);
-      setLastTabIndex(lists.length);
-      setCurrentListIndex(lists.length);
-      setTabsIndex(lists.length);
-      setTempNameOfList("");
+        setLists((prev) => {
+          return [...prev, { name: tempNameOfList, tasks: [] }];
+        });
+        setFirstTabIndex(lists.length - 3 < 0 ? 0 : lists.length - 3);
+        setLastTabIndex(lists.length);
+        setCurrentListIndex(lists.length);
+        setTabsIndex(lists.length);
+        setTempNameOfList("");
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       alert("The Name OF The New List Need Contain At Least One Char");
     }
   };
 
   return (
-    <form className="w-[100%] h-[100%] flex flex-col justify-around items-center">
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="w-[100%] h-[100%] flex flex-col justify-around items-center"
+    >
       <h1 className="2xl:text-9xl lg:text-8xl text-6xl">ADD LIST</h1>
 
       <input

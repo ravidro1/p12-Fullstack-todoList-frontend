@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import useAuthContext from "../context/useAuthContext";
+import axios from "axios";
 
 export default function AddTask({
   currentListIndex,
@@ -8,49 +10,62 @@ export default function AddTask({
   setShowAddTask,
   addTaskWindowRef,
 }) {
+  const { token } = useAuthContext();
+
   const [tempTitle, setTempTitle] = useState("");
   const [tempContent, setTempContent] = useState("");
   const [tempStartDate, setTempStartDate] = useState("");
   const [tempEndDate, setTempEndDate] = useState("");
 
-  const addTask = () => {
+  const addTask = async () => {
     if (
       tempTitle.length &&
       tempContent.length &&
       tempStartDate.length &&
       tempEndDate
     ) {
-      setLists((prev) => {
-        return [
-          ...prev.map((item, index) => {
-            if (index == currentListIndex) {
-              return {
-                ...lists.find((element, index) => index == currentListIndex),
-                list: [
-                  {
-                    title: tempTitle,
-                    content: tempContent,
-                    startDate: tempStartDate,
-                    endDate: tempEndDate,
-                    checked: false,
-                    isOpen: false,
-                    id: uuidv4(),
-                  },
-                  ...lists.find((element, index) => index == currentListIndex)
-                    .list,
-                ],
-              };
-            }
-            return item;
-          }),
-        ];
-      });
+      try {
+        const res = await axios.post(
+          "/api/list/create-new-task",
+          {
+            title: tempTitle,
+            content: tempContent,
+            start_date: tempStartDate,
+            end_date: tempEndDate,
+            ownerListID: lists[currentListIndex].id,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
 
-      setTempTitle("");
-      setTempContent("");
-      setTempStartDate("");
-      setTempEndDate("");
-      setShowAddTask(false);
+        console.log(res.data);
+        const newTask = res.data;
+
+        setLists((prev) => {
+          return [
+            ...prev.map((item, index) => {
+              if (index == currentListIndex) {
+                return {
+                  ...lists[currentListIndex],
+                  tasks: [newTask, ...lists[currentListIndex].tasks],
+                };
+              }
+              return item;
+            }),
+          ];
+        });
+
+        setTempTitle("");
+        setTempContent("");
+        setTempStartDate("");
+        setTempEndDate("");
+        setShowAddTask(false);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       alert("The New Task Need To Contain At Least One Char");
     }

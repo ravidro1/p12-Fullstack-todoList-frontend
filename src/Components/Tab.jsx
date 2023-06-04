@@ -9,7 +9,7 @@ export default function Tab({
   currentListIndex,
   setCurrentListIndex,
   index,
-  tabContinerRef,
+  tabContainerRef,
 }) {
   const selectThisTab = () => {
     setCurrentListIndex(index);
