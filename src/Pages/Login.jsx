@@ -20,7 +20,7 @@ export default function Login() {
   const { sizePerScreen } = useContext(Context);
 
   useEffect(() => {
-    // console.log(sizePerScreen);
+    console.log(sizePerScreen);
   }, [sizePerScreen]);
 
   useEffect(() => {
@@ -64,11 +64,11 @@ export default function Login() {
         onSubmit={(e) => e.preventDefault()}
         className="lg:w-[35%] w-[80%] h-[60%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center"
       >
-        <section className="w-[100%] lg:h-[45%] h-[40%] flex flex-col justify-around items-center lg:pt-[10%] pt-[15%] lg:pb-[5%] pb-[2%]">
+        <section className="w-[100%] lg:h-[45%] h-[40%] flex flex-col justify-around items-center lg:pt-[10%] pt-[5%] lg:pb-[5%] pb-[2%]">
           <input
             role="input_1"
             placeholder="Username"
-            className="lg:w-[45%] w-[65%] h-[35%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[250px] w-[350px] max-w-[80%] h-[60px] max-h-[45%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempUsername(e.target.value)}
             value={tempUsername}
@@ -76,20 +76,20 @@ export default function Login() {
           <input
             role="input_2"
             placeholder="Password"
-            className="lg:w-[45%] w-[65%] h-[35%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[250px] w-[350px] max-w-[80%] h-[60px] max-h-[45%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempPassword(e.target.value)}
             value={tempPassword}
           />{" "}
         </section>
 
-        <section className="w-[100%] lg:h-[40%] h-[45%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%] pb-[12%] pt-[20%]">
+        <section className="w-[100%] lg:h-[40%] h-[45%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%] pb-[3%] pt-[3%]">
           <button
             role="button"
             disabled={!fieldsFull}
             onClick={submitLogin}
             className={
-              "lg:w-[35%] w-[45%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold lg:text-[1.5vw] text-[5vw] outline-none " +
+              "lg:w-[200px] w-[275px] max-w-[80%] h-[70px] bg-[#2E4F4F] rounded-lg border text-white font-semibold lg:text-4xl text-3xl outline-none flex justify-center items-center  " +
               `${!fieldsFull && "opacity-60"}`
             }
           >
@@ -98,7 +98,7 @@ export default function Login() {
 
           <button
             onClick={() => navigate("/SignUp")}
-            className="w-[35%] h-[10%] text-white font-semibold lg:text-[1.75vw] text-[4vw] outline-none hover:text-red-900"
+            className="w-fit h-fit text-white font-semibold lg:text-3xl text-2xl outline-none hover:text-red-900"
           >
             To Register{" "}
           </button>

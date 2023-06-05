@@ -65,36 +65,36 @@ export default function SignUp() {
         onSubmit={(e) => e.preventDefault()}
         className="lg:w-[35%] w-[80%] h-[60%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center"
       >
-        <section className="w-[100%] lg:h-[45%] h-[40%] flex flex-col justify-around items-center lg:pt-[7%] pt-[10%]">
+        <section className="w-[100%] lg:h-[45%] h-[55%] flex flex-col justify-around items-center pt-[7%]">
           <input
             placeholder="Username"
-            className="lg:w-[45%] w-[65%] h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[250px] w-[350px] max-w-[80%] h-[60px] max-h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempUsername(e.target.value)}
             value={tempUsername}
           />
           <input
             placeholder="Password"
-            className="lg:w-[45%] w-[65%] h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[250px] w-[350px] max-w-[80%] h-[60px] max-h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempPassword(e.target.value)}
             value={tempPassword}
           />{" "}
           <input
             placeholder="Verify Password"
-            className="lg:w-[45%] w-[65%] h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
+            className="lg:w-[250px] w-[350px] max-w-[80%] h-[60px] max-h-[30%] pl-6 pr-6 rounded-lg outline-none border border-black"
             type="text"
             onChange={(e) => setTempVerifyPassword(e.target.value)}
             value={tempVerifyPassword}
           />
         </section>
 
-        <section className="w-[100%] lg:h-[40%] h-[45%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%] pb-[12%] pt-[20%]">
+        <section className="w-[100%] lg:h-[40%] h-[30%] flex flex-col justify-around items-center lg:pb-[5%] lg:pt-[5%]">
           <button
             disabled={!fieldsFull}
             onClick={submitSignUp}
             className={
-              "lg:w-[35%] w-[45%] h-[45%] bg-[#2E4F4F] rounded-lg border text-white font-semibold lg:text-[1.5vw] text-[5vw] outline-none " +
+              "lg:w-[200px] w-[275px] max-w-[80%] h-fit p-1 max-h-[70%] bg-[#2E4F4F] rounded-lg border text-white font-semibold lg:text-4xl text-3xl outline-none flex justify-center items-center  " +
               `${!fieldsFull && "opacity-60"}`
             }
           >
@@ -103,7 +103,7 @@ export default function SignUp() {
 
           <button
             onClick={() => navigate("/")}
-            className="w-[35%] h-[10%] text-white font-semibold lg:text-[1.75vw] text-[4vw] outline-none hover:text-red-900"
+            className="w-fit h-fit text-white font-semibold lg:text-3xl text-2xl outline-none hover:text-red-900"
           >
             To Login{" "}
           </button>
