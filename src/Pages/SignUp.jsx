@@ -17,6 +17,8 @@ export default function SignUp() {
 
   const [loading, setLoading] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     if (
       tempUsername.length > 0 &&
@@ -25,6 +27,7 @@ export default function SignUp() {
     )
       setFieldsFull(true);
     else setFieldsFull(false);
+    setErrorMessage("");
   }, [tempUsername, tempPassword, tempVerifyPassword]);
 
   const submitSignUp = async () => {
@@ -48,9 +51,12 @@ export default function SignUp() {
       } catch (error) {
         console.log(error);
         setLoading(false);
+        if (error?.response?.status == 400)
+          setErrorMessage("Username Already Taken");
+        else setErrorMessage("There Seems To Be Server Issues");
       }
     } else {
-      alert("Both Inputs Need To Be Fill For Login!!!");
+      setErrorMessage("All Three Fields Must Be Filled In To Register");
     }
   };
   //
@@ -61,6 +67,12 @@ export default function SignUp() {
         {" "}
         Register{" "}
       </div>
+      {errorMessage && (
+        <div className="text-center border border-red-700 bg-[rgba(185,50,50,0.5)] text-2xl text-white lg:w-[35%] w-[80%] h-[15%] rounded-lg flex justify-center items-center">
+          {" "}
+          {errorMessage}{" "}
+        </div>
+      )}
       <form
         onSubmit={(e) => e.preventDefault()}
         className="lg:w-[35%] w-[80%] h-[60%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center"

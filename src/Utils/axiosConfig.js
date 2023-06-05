@@ -8,7 +8,13 @@ let refresh = false;
 axios.interceptors.response.use(
   (res) => res,
   async (error) => {
-    console.log(refresh);
+    // console.log(refresh);
+    // if (!error.response.status)
+    //   return Promise.reject({
+    //     response: {
+    //       status: 520,
+    //     },
+    //   });
     if (error.response.status == 401 && !refresh) {
       refresh = true;
       const response = await axios.post("/api/user/refresh-token");

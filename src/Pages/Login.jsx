@@ -17,6 +17,8 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const { sizePerScreen } = useContext(Context);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export default function Login() {
   useEffect(() => {
     if (tempUsername.length > 0 && tempPassword.length > 0) setFieldsFull(true);
     else setFieldsFull(false);
+    setErrorMessage("");
   }, [tempUsername, tempPassword]);
 
   const submitLogin = async () => {
@@ -45,9 +48,12 @@ export default function Login() {
         setTempPassword("");
 
         navigate("/Home");
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
         setLoading(false);
+        if (error?.response?.status == 400)
+          setErrorMessage("Username Or Password Incorrect");
+        else setErrorMessage("There Seems To Be Server Issues");
       }
     } else {
       alert("Both Inputs Need To Be Fill For Login!!!");
@@ -60,6 +66,12 @@ export default function Login() {
         {" "}
         Login{" "}
       </div>
+      {errorMessage && (
+        <div className="text-center border border-red-700 bg-[rgba(185,50,50,0.5)] text-2xl text-white lg:w-[35%] w-[80%] h-[15%] rounded-lg flex justify-center items-center">
+          {" "}
+          {errorMessage}{" "}
+        </div>
+      )}
       <form
         onSubmit={(e) => e.preventDefault()}
         className="lg:w-[35%] w-[80%] h-[60%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col justify-around items-center"
