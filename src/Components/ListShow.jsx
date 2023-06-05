@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import swal from "sweetalert";
 import AddTask from "./AddTask";
 import OneListItem from "./OneListItem";
@@ -30,6 +30,7 @@ export default function ListShow({
 }) {
   console.log(lists);
   const { token } = useAuthContext();
+  const [errorMessage_addTask, setErrorMessage_addTask] = useState("");
 
   const deleteList = () => {
     swal({
@@ -129,6 +130,7 @@ export default function ListShow({
     })
   );
 
+  console.log(addTaskWindowRef);
   return (
     <div className="w-[100%] h-[100%] flex justify-center items-center flex-col text-white relative ">
       <section className="w-[100%] h-[100%] flex justify-around items-center flex-col ">
@@ -194,14 +196,23 @@ export default function ListShow({
       {showAddTask && (
         <section
           data-value="parent"
-          className="w-[65%] h-[80%] flex justify-center items-center absolute z-20 border border-black"
+          className="lg:w-[65%] lg:h-[70%] md:w-[75%] md:h-[80%] w-[85%] h-[95%] flex justify-between items-center fixed z-20 flex-col left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
         >
+          <div
+            style={{ visibility: errorMessage_addTask ? "visible" : "hidden" }}
+            className="text-center border p-2  border-red-700 bg-[rgba(185,50,50,0.5)] md:text-xl text-lg text-white w-[100%] h-[20%] rounded-lg flex justify-center items-center"
+          >
+            {" "}
+            {errorMessage_addTask}{" "}
+          </div>
+
           <AddTask
             lists={lists}
             setLists={setLists}
             currentListIndex={currentListIndex}
             addTaskWindowRef={addTaskWindowRef}
             setShowAddTask={setShowAddTask}
+            setErrorMessage_addTask={setErrorMessage_addTask}
           />
         </section>
       )}

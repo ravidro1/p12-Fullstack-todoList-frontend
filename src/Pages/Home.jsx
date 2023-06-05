@@ -91,9 +91,11 @@ export default function Home() {
 
       <button
         onClick={logout}
-        className="lg:w-[5%] w-[15%] h-[5%] self-start mx-5 text-white"
+        className=" max-h-[10%] aspect-square self-start mx-5 text-white"
       >
         <svg
+          width={"100%"}
+          height={"100%"}
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -107,86 +109,51 @@ export default function Home() {
         </svg>
       </button>
 
-      <div className="lg:w-[50%] w-[85%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center overflow-hidden">
-        <section className="w-[100%] lg:h-[10%] h-[15%] flex border-b border-b-[#2C3333]">
-          <TabsScrollBar
-            currentListIndex={currentListIndex}
-            setCurrentListIndex={setCurrentListIndex}
-            lists={lists}
-            setLists={setLists}
-            firstTabIndex={firstTabIndex}
-            lastTabIndex={lastTabIndex}
-            setFirstTabIndex={setFirstTabIndex}
-            setLastTabIndex={setLastTabIndex}
-            tabsIndex={tabsIndex}
-            setTabsIndex={setTabsIndex}
-          />
-        </section>
-
-        <section className="w-[100%] h-[90%] flex justify-center items-center flex-col">
-          {currentListIndex != null ? (
-            <ListShow
-              setLists={setLists}
+      <main className="h-[90%] w-[100%] flex justify-center items-center">
+        <div className="lg:w-[50%] w-[85%] h-[80%] bg-[#0E8388] rounded-xl shadow-black shadow-2xl flex flex-col items-center overflow-hidden">
+          <section className="w-[100%] lg:h-[10%] h-[15%] flex border-b border-b-[#2C3333]">
+            <TabsScrollBar
               currentListIndex={currentListIndex}
               setCurrentListIndex={setCurrentListIndex}
+              lists={lists}
+              setLists={setLists}
+              firstTabIndex={firstTabIndex}
+              lastTabIndex={lastTabIndex}
               setFirstTabIndex={setFirstTabIndex}
               setLastTabIndex={setLastTabIndex}
-              lists={lists}
-              showAddTask={showAddTask}
-              setShowAddTask={setShowAddTask}
-              addTaskWindowRef={addTaskWindowRef}
+              tabsIndex={tabsIndex}
+              setTabsIndex={setTabsIndex}
             />
-          ) : (
-            <div className="text-white text-2xl w-[100%] h-[100%] ">
-              <AddList
+          </section>
+
+          <section className="w-[100%] h-[90%] flex justify-center items-center flex-col">
+            {currentListIndex != null ? (
+              <ListShow
+                setLists={setLists}
+                currentListIndex={currentListIndex}
                 setCurrentListIndex={setCurrentListIndex}
                 setFirstTabIndex={setFirstTabIndex}
                 setLastTabIndex={setLastTabIndex}
                 lists={lists}
-                setTabsIndex={setTabsIndex}
-                setLists={setLists}
+                showAddTask={showAddTask}
+                setShowAddTask={setShowAddTask}
+                addTaskWindowRef={addTaskWindowRef}
               />
-            </div>
-          )}
-        </section>
-      </div>
+            ) : (
+              <div className="text-white text-2xl w-[100%] h-[100%] ">
+                <AddList
+                  setCurrentListIndex={setCurrentListIndex}
+                  setFirstTabIndex={setFirstTabIndex}
+                  setLastTabIndex={setLastTabIndex}
+                  lists={lists}
+                  setTabsIndex={setTabsIndex}
+                  setLists={setLists}
+                />
+              </div>
+            )}
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
-
-// [
-//   {
-//     name: "one list",
-//     list: [
-//       { content: "1", checked: false },
-//       { content: "1", checked: false },
-//       { content: "1", checked: false },
-//       { content: "1", checked: false },
-//       { content: "1", checked: false },
-//     ],
-//   },
-//   {
-//     name: "two list",
-//     list: [
-//       { content: "2", checked: true },
-//       { content: "2", checked: true },
-//       { content: "2", checked: false },
-//       { content: "2", checked: false },
-//       { content: "2", checked: false },
-//     ],
-//   },
-//   {
-//     name: "three list",
-//     list: [
-//       { content: "3", checked: false },
-//       { content: "3", checked: false },
-//       { content: "3", checked: false },
-//       { content: "3", checked: true },
-//       { content: "3", checked: false },
-//     ],
-//   },
-//   { name: "four list", list: [1, 2, 3, 4, 5] },
-//   { name: "five list", list: [] },
-//   { name: "six list", list: [] },
-//   { name: "seven list", list: [] },
-// ]
