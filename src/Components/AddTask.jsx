@@ -29,6 +29,8 @@ export default function AddTask({
       tempStartDate.length &&
       tempEndDate
     ) {
+      setErrorMessage_addTask("");
+
       try {
         const res = await axios.post(
           "/api/list/create-new-task",

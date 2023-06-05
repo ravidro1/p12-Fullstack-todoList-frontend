@@ -33,11 +33,15 @@ export default function Home() {
       .then((res) => {
         // add isOpen field for each task
         const tempLists = res.data.map((list) => {
+          const test = sortTasks(
+            list.tasks.map((task) => {
+              return { ...task, isOpen: false };
+            })
+          );
+          console.log(test);
           return {
             ...list,
-            tasks: list.tasks.map((task) => {
-              return { ...task, isOpen: false };
-            }),
+            tasks: test,
           };
         });
 
@@ -71,6 +75,20 @@ export default function Home() {
     ) {
       setShowAddTask(false);
     }
+  };
+
+  const sortTasks = (tasks) => {
+    const tempTasks = [...tasks];
+    for (let i = 0; i < tasks.length; i++) {
+      for (let j = 0; j < tasks.length; j++) {
+        if (tempTasks[i].render_number < tempTasks[j].render_number && i != j) {
+          const tempTask = tempTasks[i];
+          tempTasks[i] = tempTasks[j];
+          tempTasks[j] = tempTask;
+        }
+      }
+    }
+    return tempTasks;
   };
 
   return (

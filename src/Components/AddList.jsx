@@ -24,6 +24,8 @@ export default function AddList({
   }, [tempNameOfList]);
 
   const addList = async () => {
+    setErrorMessage_addList("");
+
     if (fieldsFull) {
       try {
         const res = await axios.post(
